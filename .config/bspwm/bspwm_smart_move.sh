@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 # A more fluid way of moving windows with BSPWM, which is meant to be
 # implemented in SXHKD.  If there is a window in the given direction,

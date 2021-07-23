@@ -38,7 +38,7 @@ super + {h,j,k,l}
 	bspc node -f {west,south,north,east}
 
 super + shift + {h,j,k,l}
-	/home/deablofk/.config/sxhkd/bspwm_smart_move.sh {west,south,north,east}
+	$HOME/.config/bspwm/bspwm_smart_move.sh {west,south,north,east}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -110,12 +110,6 @@ XF86Audio{Prev,Next}
 
 XF86HomePage
 	qutebrowser
-
-XF86Explorer
-	st -d /home/deablofk/Downloads/	
-
-shift + XF86Explorer
-	st -d /home/deablofk/programming/
 
 XF86Audio{Lower,Raise}Volume
 	pactl set-sink-volume @DEFAULT_SINK@ {-2%,+2%}
