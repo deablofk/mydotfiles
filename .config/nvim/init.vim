@@ -11,6 +11,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
+"TAB SPACING FOR HTML
+autocmd BufRead,BufNewFile *.htm,*.html setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
 
 """"""""""""""""""""""""""""""""""""""""""""
 " CUSTOM SCRIPT TO OPEN AND CLOSE TERMINAL "
