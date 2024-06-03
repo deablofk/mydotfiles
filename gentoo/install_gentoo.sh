@@ -2,17 +2,7 @@
 
 # WARNING: gpt the partitions yourself with cfdisk /dev/<disk>
 # THIS SCRIPTS ONLY WORKS WITH EFI
-BOOT_PARTITION="/dev/nvme0n1p1"
-SWAP_PARTITION="/dev/nvme0n1p2"
-ROOT_PARTITION="/dev/nvme0n1p3"
-ROOT_MOUNT_POINT="/mnt/gentoo"
-STAGE_3_FILE_LINK="https://distfiles.gentoo.org/releases/amd64/autobuilds/20240526T163557Z/stage3-amd64-hardened-openrc-20240526T163557Z.tar.xz"
-MAKE_CONF_FILE="https://cdn.discordapp.com/attachments/964381455545409568/1246852226861891696/make.conf"
-MAKE_CONF_FILE="https://raw.githubusercontent.com/deablofk/mydotfiles/main/gentoo/make.conf"
-TIMEZONE_OPENRC="America/Cuiaba"
-FIRST_LOCALE="en_US"
-SECOND_LOCALE="pt_BR"
-
+source ./config_gentoo.sh
 
 # FORMAT THE PARTITIONS
 mkfs.vfat -F 32 $BOOT_PARTITION
@@ -38,6 +28,10 @@ tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 wget -P "$ROOT_MOUNT_POINT/etc/portage/make.conf" $MAKE_CONF_FILE 
 
 
+# COPY DNS INFO TO CHROOT WORK PROPERLY
+cp --dereference /etc/resolv.conf "$ROOT_MOUNT_POINT/etc/"
+
+
 # MOUNT THE NECESSARY FILESYSTEMS
 mount --types proc /proc "$ROOT_MOUNT_POINT/proc"
 mount --rbind /sys "$ROOT_MOUNT_POINT/sys"
@@ -46,15 +40,22 @@ mount --rbind /dev "$ROOT_MOUNT_POINT/dev"
 mount --make-rslave "$ROOT_MOUNT_POINT/dev"
 mount --bind /run "$ROOT_MOUNT_POINT/run"
 mount --make-slave "$ROOT_MOUNT_POINT/run"
-test -L /dev/shm && rm /dev/shm && mkdir /dev/shm
-mount --types tmpfs --options nosuid,nodev,noexec shm /dev/shm
-chmod 1777 /dev/shm /run/shm
+
+
+# COPY THE CONFIG TO THE CHROOT TO USE IN CHROOT
+cp ./config_gentoo.sh "$ROOT_MOUNT_POINT/config_gentoo.sh"
 
 
 # CHROOT IN THE NEW ENVIRONMENT
-chroot $ROOT_MOUNT_POINT /bin/bash
+chroot $ROOT_MOUNT_POINT /bin/bash << "EOT"
 source /etc/profile
 export PS1="(chroot) ${PS1}"
+
+
+# RE-EXPORT THE VARIABLES
+chmod +x config_gentoo.sh
+source ./config_gentoo.sh
+rm config_gentoo.sh
 
 
 # INSTALL GENTOO EBUILD REPOSITORY SNAPSHOT FROM THE WEB
@@ -148,9 +149,10 @@ emerge net-wireless/iw net-wireless/wpa_supplicant
 
 # GRUB
 emerge --verbose sys-boot/grub
-grub-install --target=x86_64-efi --efi-directory=/efi --bootloade-id="Gentoo"
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id="Gentoo"
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
 # ECHO TO CHANGE THE PASSWORD OF THE GENTOO INSTALATION
-passwd
+# do the rest of the installation
+EOT
