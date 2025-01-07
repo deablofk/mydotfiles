@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # THIS COPIES FOLDERS INSIDE TO_MOVE ARRAY TO .CONFIG FOLDER
-to_move=("sway", "qutebrowser", "alacritty", "zsh", "mimeapps.list")
+to_move=("sway", "qutebrowser", "alacritty", "zsh", "mimeapps.list", "wallpapers")
 
 source_folder=".config"
 destination_folder="$HOME/.config/"
