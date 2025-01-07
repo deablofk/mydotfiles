@@ -1,111 +1,135 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+WORDCHARS=''
 
-# Path to your oh-my-zsh installation.
-export ZSH="/home/deablofk/.oh-my-zsh"
+# PLUGINS
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.config/zsh/zsh-history-substring-search.zsh
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# ZSH HISTORY
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
-# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+# COMPLETION MODE
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+# if [ $(date +'%j') != $(date -r ~/.zcompdump +'%j') ]; then # compile once per day
+compinit
 # else
-#   export EDITOR='mvim'
+    # compinit -C
 # fi
+_comp_options+=(globdots)
+# case insensitive completion only suggests when no case-sensitive matches is present
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# GIT 
+autoload -Uz vcs_info
+setopt PROMPT_SUBST
+precmd() {
+    vcs_info
+}
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# FUZY FIND CTRL-R
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-BLK="04" CHR="04" DIR="c9" EXE="02" REG="00" HARDLINK="00" SYMLINK="06" MISSING="00" ORPHAN="01" FIFO="0F" SOCK="0F" OTHER="02"
-export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
-export NNN_COLORS="2136"
-export READER='zathura'
+# PROMPT ((R)IGHT)
+PROMPT='%F{yellow}%c ➤ %F{reset}%f'
+RPROMPT='%F{cyan}${vcs_info_msg_0_}'
+
+
+# BIND THE KEYBINDS TO EMACS INSTEAD OF DEFAULT VI
+bindkey -e
+
+# bindkey -v
+# [PageUp] - Up a line of history
+bindkey -M emacs "^[[5~" up-line-or-history
+# [PageDown] - Down a line of history
+bindkey -M emacs "^[[6~" down-line-or-history
+# Start typing + [Up-Arrow] - fuzzy find history forward
+autoload -U up-line-or-beginning-search
+zle -N up-line-or-beginning-search
+bindkey -M emacs "^[[A" up-line-or-beginning-search
+# Start typing + [Down-Arrow] - fuzzy find history backward
+autoload -U down-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey -M emacs "^[[B" down-line-or-beginning-search
+# [Home] - Go to beginning of line
+bindkey -M emacs "^[[H" beginning-of-line
+# [End] - Go to end of line
+bindkey -M emacs '^[[F' end-of-line
+# [Shift-Tab] - move through the completion menu backwards
+bindkey -M emacs "^[[Z" reverse-menu-complete
+# [Delete] - delete forward
+bindkey -M emacs "^[[3~" delete-char
+# [Ctrl-Delete] - delete whole forward-word
+bindkey -M emacs '^[[3;5~' kill-word
+# [Esc-w] - Kill from the cursor to the mark
+bindkey '\ew' kill-region                            
+# [Esc-l] - run command: ls
+bindkey -s '\el' 'ls\n'                   
+# [Esc-c] - run command: clear
+bindkey -s '\ec' 'clear\n'
+# [Ctrl-r] - Search backward incrementally for a specified string. The string may begin with ^ to anchor the search to the beginning of the line.
+bindkey '^r' history-incremental-search-backward     
+# [Space] - don't do history expansion
+bindkey ' ' magic-space                           
+# EDIT THE COMMAND IN $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^[n' edit-command-line
+
+# FZF completion
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+
+
+# PROGRAMS EXPORT
+export PATH=~/.local/bin:~/.config/emacs/bin:~/idea/bin/:~/anaconda3/bin/:~/.local/share/coursier/bin:/home/cwby/.dotnet:$PATH
 export EDITOR='nvim'
-export NNN_PLUG='d:dragdrop;a:preview-tabbed'
-export NNN_FIFO=/tmp/nnn.fifo
-alias n='nnn -d -H'
+export READER='zathura'
+export LS_COLORS="di=1;33:"
 
+# PROGRAMS ALIASES
+alias yt-dlp='yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"'
+# alias cat='bat'
+alias ls="ls --color -h -F --group-directories-first"
+alias _="sudo "
+alias lf="~/.config/lf/lfub"
+alias vim="nvim"
+
+# DEBIAN ALIASES
+alias "apt search"="apt search --names-only"
+
+# MATH FUNCTION TO BE USED AS PROGRAM
+math () {
+    echo "result of $@: $(($@))"
+}
+
+# GIT ALIASES
+source ~/.config/zsh/git.plugin.zsh
+
+# Changing/making/removing directory
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
+
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
+
+[[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+. "$HOME/.asdf/asdf.sh"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/cwby/.sdkman"
+[[ -s "/home/cwby/.sdkman/bin/sdkman-init.sh" ]] && source "/home/cwby/.sdkman/bin/sdkman-init.sh"
+
+export DOTNET_ROOT=$HOME/.dotnet
