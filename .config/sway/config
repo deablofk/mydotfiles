@@ -136,19 +136,19 @@ gaps inner 5
 client.focused              #464646 #464646 #E4E4E4 #464646   #464646
 client.focused_inactive     #262626 #262626 #E4E4E4 #262626   #262626
 
-# WORKSPACE 99 APPLICATIONS
-workspace 11
-exec "spotify-adblock.sh"
-exec "nohup alacritty -e sh -c 'nvim /home/cwby/vimwiki/index.wiki'"
-exec "Vesktop-1.5.4.AppImage"
-exec "neovide.AppImage /home/cwby/programming/cwby/Jasonify/"
-exec "qutebrowser"
-exec "sowon $((60*60))"
+# # WORKSPACE 99 APPLICATIONS
+# workspace 11
+# exec "spotify-adblock.sh"
+# exec "nohup alacritty -e sh -c 'nvim /home/cwby/vimwiki/index.wiki'"
+# exec "Vesktop-1.5.4.AppImage"
+# exec "neovide.AppImage /home/cwby/programming/cwby/Jasonify/"
+# exec "qutebrowser"
+# exec "sowon $((60*60))"
 
-# WINDOW RULES FOR WORKSPACE 99
-for_window [instance="spotify" workspace=11] move to workspace 10
-for_window [app_id="Alacritty" workspace=11] move to workspace 10
-for_window [instance="vesktop" workspace=11] move to workspace 10
-for_window [app_id="neovide" workspace=11] move to workspace 3
-for_window [app_id="org.qutebrowser.qutebrowser" workspace=11] move to workspace 1
-for_window [class="sowon"] floating toggle, sticky toggle, resize set 200 30, move position 2190 -30
+# # WINDOW RULES FOR WORKSPACE 99
+# for_window [instance="spotify" workspace=11] move to workspace 10
+# for_window [app_id="Alacritty" workspace=11] move to workspace 10
+# for_window [instance="vesktop" workspace=11] move to workspace 10
+# for_window [app_id="neovide" workspace=11] move to workspace 3
+# for_window [app_id="org.qutebrowser.qutebrowser" workspace=11] move to workspace 1
+# for_window [class="sowon"] floating toggle, sticky toggle, resize set 200 30, move position 2190 -30
