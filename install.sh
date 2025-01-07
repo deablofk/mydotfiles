@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+# THIS COPIES FOLDERS INSIDE TO_MOVE ARRAY TO .CONFIG FOLDER
+to_move=("sway", "qutebrowser", "alacritty", "zsh", "mimeapps.list")
+
+source_folder=".config"
+destination_folder="$HOME/.config/"
+
+for folder in $(ls -d "$source_folder"/*); do
+	folder_name=$(basename "$folder")
+	if [[ "${to_move[@]}" =~ "${folder_name}" ]]; then
+		echo "Copy $folder to $destination_folder"
+		cp -r "$folder" "$destination_folder"
+	fi
+done
