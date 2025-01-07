@@ -1,0 +1,49 @@
+[font]
+normal.family = "Iosevka Nerd Font"
+normal.style = "Regular"
+bold.family = "Iosevka Nerd Font"
+bold.style = "Bold"
+italic.family = "Iosevka Nerd Font"
+italic.style = "Italic"
+bold_italic.family = "Iosevka Nerd Font"
+bold_italic.style = "Bold Italic"
+size = 16
+offset.x = 0
+offset.y = 0
+
+[colors.bright]
+black = "#52494E"
+blue = "#96A6C8"
+cyan = "#95A99F"
+green = "#74bd56"
+magenta = "#9E95C7"
+red = "#FF4F58"
+white = "#ffffff"
+yellow = "#FFDD33"
+
+[colors.cursor]
+cursor = "#FFDD33"
+
+[colors.normal]
+black = "#262626"
+blue = "#96a6c8"
+cyan = "#95a99f"
+green = "#74bd56"
+magenta = "#9e95c7"
+red = "#F43841"
+white = "#E4E4E4"
+yellow = "#ffdd33"
+
+[colors.primary]
+background = "#000000"
+foreground = "#E4E4E4"
+# background = "#262626"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "Return"
+mods = "Control|Shift"
+
+[window]
+blur = true
+opacity = 0.8
