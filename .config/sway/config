@@ -1,0 +1,154 @@
+include /etc/sway/config.d/*
+exec swaync
+
+# OUTPUT SETTINGS
+output DP-2 resolution 2560x1440@100hz transform 0 bg ~/.config/wallpapers/11005177.jpg fill
+output DP-1 resolution 1920x1080@239.964hz transform 270 bg ~/.config/wallpapers/emma-dau-HW2diOZ4yg4-unsplash.jpg fill position 0 0
+
+# INPUT SETTINGS
+input * {
+    xkb_layout "br"
+    repeat_rate 50
+    repeat_delay 300
+}
+
+# WORKSPACE MONITOR SETTINGS
+workspace 1 output DP-2
+workspace 2 output DP-2
+workspace 3 output DP-2
+workspace 4 output DP-2
+workspace 5 output DP-2
+workspace 6 output DP-2
+workspace 7 output DP-2
+workspace 8 output DP-2
+workspace 9 output DP-1
+workspace 10 output DP-1
+
+# KEY BINDINGS
+bindsym Mod4+Return exec alacritty
+bindsym Mod4+comma kill
+bindsym Mod4+e exec wmenu-run
+floating_modifier Mod4 normal
+bindsym Mod4+Shift+c reload
+bindsym Mod4+Shift+e exec swaynag -t warning -m 'Do you want to quit?.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# WINDOW NAVIGATION
+bindsym Mod4+h focus left
+bindsym Mod4+j focus down
+bindsym Mod4+k focus up
+bindsym Mod4+l focus right
+
+# WINDOW MOVEMENT
+bindsym Mod4+Shift+h move left
+bindsym Mod4+Shift+j move down
+bindsym Mod4+Shift+k move up
+bindsym Mod4+Shift+l move right
+
+# WORKSPACE MOVEMENT
+bindsym Mod4+1 workspace number 1
+bindsym Mod4+2 workspace number 2
+bindsym Mod4+3 workspace number 3
+bindsym Mod4+4 workspace number 4
+bindsym Mod4+5 workspace number 5
+bindsym Mod4+6 workspace number 6
+bindsym Mod4+7 workspace number 7
+bindsym Mod4+8 workspace number 8
+bindsym Mod4+9 workspace number 9
+bindsym Mod4+0 workspace number 10
+bindsym Mod4+Shift+1 move container to workspace number 1
+bindsym Mod4+Shift+2 move container to workspace number 2
+bindsym Mod4+Shift+3 move container to workspace number 3
+bindsym Mod4+Shift+4 move container to workspace number 4
+bindsym Mod4+Shift+5 move container to workspace number 5
+bindsym Mod4+Shift+6 move container to workspace number 6
+bindsym Mod4+Shift+7 move container to workspace number 7
+bindsym Mod4+Shift+8 move container to workspace number 8
+bindsym Mod4+Shift+9 move container to workspace number 9
+bindsym Mod4+Shift+0 move container to workspace number 10
+
+# LAYOUT SETTINGS
+bindsym Mod4+b splith
+bindsym Mod4+v splitv
+bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+t layout toggle split
+bindsym Mod4+f fullscreen
+bindsym Mod4+space floating toggle
+bindsym Mod4+Shift+space sticky toggle
+
+# TAB AND FOCUS SWITCHING
+bindsym Mod4+Tab workspace back_and_forth
+bindsym Alt+Tab workspace next
+bindsym Mod4+c focus mode_toggle
+bindsym Mod4+a focus parent
+
+# SCRATCHPAD
+bindsym Mod4+Shift+minus move scratchpad
+bindsym Mod4+minus scratchpad show
+
+# MULTIMEDIA KEYS
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+
+# NOTIFICATIONS
+bindsym Mod4+Shift+n exec swaync-client -t -sw
+
+# RESIZING CONTAINERS
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# BAR SETTINGS
+bar {
+    height 16
+    position top
+    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+    colors {
+        statusline #FFDD33
+        background #262626
+        focused_workspace #FFDD33 #FFDD33 #262626
+        inactive_workspace #262626 #262626 #E4E4E4
+    }
+}
+
+# SCROLLABLE WORKSPACE
+bindsym --whole-window {
+    Mod4+button4 workspace prev
+    Mod4+button5 workspace next
+}
+
+# RESIZE MODE
+bindsym Mod4+r mode "resize"
+
+# SCREENSHOT
+bindsym Mod4+Shift+p exec grim -g "$(slurp -d)" - | wl-copy
+
+# THEME SETTINGS
+font Iosevka Nerd Font Regular 10
+default_border pixel 2
+gaps outer 3
+gaps inner 5
+client.focused              #464646 #464646 #E4E4E4 #464646   #464646
+client.focused_inactive     #262626 #262626 #E4E4E4 #262626   #262626
+
+# WORKSPACE 99 APPLICATIONS
+workspace 11
+exec "spotify-adblock.sh"
+exec "nohup alacritty -e sh -c 'nvim /home/cwby/vimwiki/index.wiki'"
+exec "Vesktop-1.5.4.AppImage"
+exec "neovide.AppImage /home/cwby/programming/cwby/Jasonify/"
+exec "qutebrowser"
+exec "sowon $((60*60))"
+
+# WINDOW RULES FOR WORKSPACE 99
+for_window [instance="spotify" workspace=11] move to workspace 10
+for_window [app_id="Alacritty" workspace=11] move to workspace 10
+for_window [instance="vesktop" workspace=11] move to workspace 10
+for_window [app_id="neovide" workspace=11] move to workspace 3
+for_window [app_id="org.qutebrowser.qutebrowser" workspace=11] move to workspace 1
+for_window [class="sowon"] floating toggle, sticky toggle, resize set 200 30, move position 2190 -30
