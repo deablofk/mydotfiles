@@ -126,10 +126,7 @@ alias -g ......='../../../../..'
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-. "$HOME/.asdf/asdf.sh"
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/cwby/.sdkman"
 [[ -s "/home/cwby/.sdkman/bin/sdkman-init.sh" ]] && source "/home/cwby/.sdkman/bin/sdkman-init.sh"
-
 export DOTNET_ROOT=$HOME/.dotnet
