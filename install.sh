@@ -16,3 +16,5 @@ done
 
 echo "Copy .zshrc to ~/"
 cp .zshrc ~/
+echo "Copy .zshrc to ~/"
+cp .ideavimrc ~/

@@ -1,0 +1,24 @@
+let mapleader = " "
+
+set NERDTree
+set commentary
+set number relativenumber
+
+sethandler <C-C> n-v:ide i:vim
+
+" if @% == "Project"
+" 	nnoremap <leader>n :action NewClass<CR>
+" endif
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>c :action NewClass<CR>
+nnoremap <leader>bc :action CloseContent<CR>
+
+nnoremap <leader>rr :action Run<CR>
+nnoremap <leader>f :action ReformatCode<CR>
+nnoremap <leader>ll :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>co :action Generate<CR>
+
+nnoremap <leader>ce :action MaximizeToolWindow<CR>
