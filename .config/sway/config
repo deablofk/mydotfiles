@@ -9,6 +9,7 @@ output DP-2 resolution 2560x1440@100hz transform 0
 output DP-1 resolution 1920x1080@239.964hz transform 270 position 0 0
 exec_always $HOME/.config/sway/auto-paper.sh
 exec echo "*/15 * * * * $HOME/.config/sway/auto-paper.sh" | crontab -
+exec waybar
 
 # INPUT SETTINGS
 input * {
@@ -109,18 +110,18 @@ mode "resize" {
 }
 
 # BAR SETTINGS
-bar {
-    height 16
-    position top
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-    colors {
-        statusline #FFDD33
-        background #262626
-        focused_workspace #FFDD33 #FFDD33 #262626
-        inactive_workspace #262626 #262626 #E4E4E4
-    }
-}
-
+# bar {
+#     height 16
+#     position top
+#     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+#     colors {
+#         statusline #FFDD33
+#         background #262626
+#         focused_workspace #FFDD33 #FFDD33 #262626
+#         inactive_workspace #262626 #262626 #E4E4E4
+#     }
+# }
+#
 # SCROLLABLE WORKSPACE
 bindsym --whole-window {
     Mod4+button4 workspace prev
