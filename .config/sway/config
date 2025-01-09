@@ -1,6 +1,9 @@
 include /etc/sway/config.d/*
 exec swaync
 
+# mimics the bspwm split behavior in the main monitor (DP-2)
+exec_always autotiling --output DP-2
+
 # OUTPUT SETTINGS
 output DP-2 resolution 2560x1440@100hz transform 0 bg ~/.config/wallpapers/11005177.jpg fill
 output DP-1 resolution 1920x1080@239.964hz transform 270 bg ~/.config/wallpapers/emma-dau-HW2diOZ4yg4-unsplash.jpg fill position 0 0
