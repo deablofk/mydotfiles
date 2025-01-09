@@ -98,6 +98,7 @@ alias ls="ls --color -h -F --group-directories-first"
 alias _="sudo "
 alias lf="~/.config/lf/lfub"
 alias vim="nvim"
+alias ssh="TERM=xterm ssh"
 
 # DEBIAN ALIASES
 alias "apt search"="apt search --names-only"
