@@ -86,7 +86,7 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 
 # PROGRAMS EXPORT
-export PATH=~/.local/bin:~/.config/emacs/bin:~/idea/bin/:~/anaconda3/bin/:~/.local/share/coursier/bin:/home/cwby/.dotnet:$PATH
+export PATH=~/.local/bin:~/.config/emacs/bin:~/idea/bin/:~/anaconda3/bin/:~/.local/share/coursier/bin:/home/cwby/.dotnet:~/.cargo/bin/:$PATH
 export EDITOR='nvim'
 export READER='zathura'
 export LS_COLORS="di=1;33:"
